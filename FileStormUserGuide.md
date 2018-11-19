@@ -20,9 +20,11 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。�
 * IPFS Daemon - 文件以IPFS的方式存储的主要平台。
 * IPFS Monkey - 墨客子链节点对IPFS的调用。
 
-这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。以Macbook为例：
+这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。
 
 redis：
+
+####Ubuntu
 ```
 sudo apt update
 sudo apt full-upgrade
@@ -31,21 +33,36 @@ curl -O http://download.redis.io/redis-stable.tar.gz
 tar xzvf redis-stable.tar.gz
 sudo apt install redis-server
 ```
-ipfs
-可以从这个链接[下载](https://dist.ipfs.io/#go-ipfs)最新版本ipfs软件包。我们以ubuntu版本为例
+####CentOs
 ```
-wget https://dist.ipfs.io/go-ipfs/v0.4.17/go-ipfs_v0.4.17_linux-amd64.tar.gz
-tar xvfz go-ipfs_v0.4.17_linux-amd64.tar.gz
-sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
+sudo yum install epel-release
+sudo yum update
+sudo yum install redis
 ```
 
-scsserver 可以从这个[链接](https://github.com/MOACChain/moac-core/releases/tag/v1.0)下载最新版本。我们以ubuntu版本为例。
+ipfs
+可以从这个链接[下载](https://dist.ipfs.io/#go-ipfs)最新版本ipfs软件包。
+
+####Ubuntu
+```
+curl https://dist.ipfs.io/go-ipfs/v0.4.17/go-ipfs_v0.4.17_linux-amd64.tar.gz > go-ipfs.tar.gz
+tar xvfz go-ipfs.tar.gz
+sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
+```
+####CentOs
+```
+sudo yum install epel-release
+sudo yum update
+sudo yum install redis
+```
+
+scsserver 可以从这个[链接](https://github.com/MOACChain/moac-core/releases/tag/v1.0)下载最新版本。我们以Linux版本为例。
 
 也可以从这里下载Docker版本。关于Docker的安装和使用，可以看着里：[Get Started with Docker](https://docs.docker.com/get-started/).
 
 #### 设置
 
-设置文件是../config/userconfig.json
+设置文件是userconfig.json
 
 VnodeServiceCfg的设置是从 [Node info - Testnet](https://nodes101.moac.io/)上，找到Vnode Protocol Pool下面的任何一个Vnode/Port组合加上。
 Beneficiary设置成SCS节点收益的受益人钱包地址。
