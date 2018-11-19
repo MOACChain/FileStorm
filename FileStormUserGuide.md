@@ -1,6 +1,6 @@
 ## FileStorm 用户指南
 
-FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。详细介绍可参看这篇[FileStorm - 在墨客子链上实现的IPFS存储平台](FileStorm)。这个平台的用户有三类。
+FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。详细介绍可参看这篇[FileStorm - 在墨客子链上实现的IPFS存储平台](FileStorm.md)。这个平台的用户有三类。
 
 1. 存储提供方：
 存储提供方将会提供用于存储的硬件设备，如带大容量硬盘的电脑，或者订制的硬件盒子。设备需要安装FileStorm程序，用来链接墨客FileStorm子链，和IPFS网络。为FileStorm提供存储可以得到收益，就是俗称的存储挖矿。
@@ -18,6 +18,7 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。
 * SCSServer - 墨客子链节点程序。
 * redis - 本地数据库，用于存储文件公共哈希和私密哈希的对应。
 * IPFS Daemon - 文件以IPFS的方式存储的主要平台。
+* IPFS Monkey - 墨客子链节点对IPFS的调用。
 
 这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。以Macbook为例：
 
@@ -157,7 +158,7 @@ console.log('original', original); 
 console.log('encoded', encoded.toString('hex'));
 ```
 
-7. 得到的字节数是46位的16进制数（因为每一位两个数字，一共92个数字）。因为solidty参数的存储空间是32位，46位的16进制数需要两个存储空间才行，然后我们要把得到的16进制数后面补上足够多的0，变成一个64位的16进制数（一共108个数字）。
+7. 得到的字节数是46位的16进制数（因为每一位两个数字，一共92个数字）。因为solidty参数的存储空间是32位，46位的16进制数需要两个存储空间才行，然后我们要把得到的16进制数后面补上足够多的0，变成一个64位的16进制数（一共128个数字）。
 8. 调用函数处理文件有如下三个函数，分别可以对文件进行写，读，删。
 8. from: 这必须是本机keystore里存在的一个账号。如果是vnode里第一次生成的就是chain3.mc.accounts[0]，必须先进行一下`personal.unlockAccount(mc.accounts[0])`解锁使用。
 8. to: subchainbaseaddress是SubChainBase合约地址，必须由应用项目方提供，我们可以用前面测试得到的地址。
