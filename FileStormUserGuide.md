@@ -24,7 +24,7 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。�
 
 redis：
 
-####Ubuntu
+#### Ubuntu
 ```
 sudo apt update
 sudo apt full-upgrade
@@ -33,7 +33,7 @@ curl -O http://download.redis.io/redis-stable.tar.gz
 tar xzvf redis-stable.tar.gz
 sudo apt install redis-server
 ```
-####CentOs
+#### CentOs
 ```
 sudo yum install epel-release
 sudo yum update
@@ -43,13 +43,13 @@ sudo yum install redis
 ipfs
 可以从这个链接[下载](https://dist.ipfs.io/#go-ipfs)最新版本ipfs软件包。
 
-####Ubuntu
+#### Ubuntu
 ```
 curl https://dist.ipfs.io/go-ipfs/v0.4.17/go-ipfs_v0.4.17_linux-amd64.tar.gz > go-ipfs.tar.gz
 tar xvfz go-ipfs.tar.gz
 sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
 ```
-####CentOs
+#### CentOs
 ```
 sudo yum install epel-release
 sudo yum update
