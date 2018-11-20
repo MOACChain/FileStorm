@@ -15,9 +15,9 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。�
 
 运行FileStorm子链需要安装下面四个模块
 
-* SCSServer - 墨客子链节点程序。
 * redis - 本地数据库，用于存储文件公共哈希和私密哈希的对应。
 * IPFS Daemon - 文件以IPFS的方式存储的主要平台。
+* SCSServer - 墨客子链节点程序。
 * IPFS Monkey - 墨客子链节点对IPFS的调用。
 
 这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。
@@ -51,9 +51,9 @@ sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
 ```
 #### CentOs
 ```
-sudo yum install epel-release
-sudo yum update
-sudo yum install redis
+curl https://dist.ipfs.io/go-ipfs/v0.4.17/go-ipfs_v0.4.17_linux-amd64.tar.gz > go-ipfs.tar.gz
+tar xvfz go-ipfs.tar.gz
+sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
 ```
 
 scsserver 和 ipfs_monkey 可以从这个[链接](https://github.com/MOACChain/FileStorm/tree/master/release)下载最新版本。
