@@ -1,6 +1,6 @@
 ## FileStorm 用户指南
 
-FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。详细介绍可参看这篇[FileStorm - 在墨客子链上实现的IPFS存储平台](FileStorm.md)。这个平台的用户有三类。
+FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。详细介绍可参看这篇[FileStorm - 在墨客子链上实现的IPFS存储平台](README.md)。这个平台的用户有三类。
 
 1. 存储提供方：
 存储提供方将会提供用于存储的硬件设备，如带大容量硬盘的电脑，或者订制的硬件盒子。设备需要安装FileStorm程序，用来链接墨客FileStorm子链，和IPFS网络。为FileStorm提供存储可以得到收益，就是俗称的存储挖矿。

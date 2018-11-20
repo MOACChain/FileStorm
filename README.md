@@ -43,7 +43,7 @@ IPFS Daemon由IPFS源代码生成，没有改动。所以FileStorm子链是一�
 
 ### FileStorm 用户指南
 
-FileStorm的使用可以看这里。[FileStorm用户指南](https://github.com/MOACChain/FileStorm/FileStormUserGuide)
+FileStorm的使用可以看这里。[FileStorm用户指南](FileStormUserGuide.md)
 
 ### IPFS合约
 
