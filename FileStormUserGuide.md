@@ -56,7 +56,14 @@ sudo yum update
 sudo yum install redis
 ```
 
-scsserver 可以从这个[链接](https://github.com/MOACChain/moac-core/releases/tag/v1.0)下载最新版本。我们以Linux版本为例。
+scsserver 和 ipfs_monkey 可以从这个[链接](https://github.com/MOACChain/FileStorm/tree/master/release)下载最新版本。
+
+下载后，在服务器端生成filestorm做为工作文件夹。将下载的文件包在次文件夹内解压出如下文件：
+* scsserver
+* ipfs_monkey
+* userconfig.json
+* run_filestorm_scs.sh
+* stop_filestorm_scs.sh
 
 也可以从这里下载Docker版本。关于Docker的安装和使用，可以看着里：[Get Started with Docker](https://docs.docker.com/get-started/).
 
@@ -67,11 +74,12 @@ scsserver 可以从这个[链接](https://github.com/MOACChain/moac-core/release
 VnodeServiceCfg的设置是从 [Node info - Testnet](https://nodes101.moac.io/)上，找到Vnode Protocol Pool下面的任何一个Vnode/Port组合加上。
 Beneficiary设置成SCS节点收益的受益人钱包地址。
 
-
 服务器上必须把下面的端口打开:
 * 4001
 * 5001
 * 8080
+
+如果节点做为子链监控节点，还需要打开run_filestorm_scs.sh中定义的rpc端口，缺省是50068.
 
 #### 运行
 
@@ -84,25 +92,26 @@ ipfs init
 然后就可以运行FileStorm了。FileStorm可以调用下面的脚本运行。
 
 ```
-cd scsserver
+cd filestorm
 ./run_filestorm_scs.sh
 ```
 
 脚本代码如下，在后台调用四个模块
 ```
 #!/bin/bash  
+#!/bin/bash
 echo "Starting FileStorm SCS--"
 
-nohup ipfs daemon > ipfs.out 2>&1 &
+IPFS_PATH=~/.ipfs nohup ipfs daemon > ipfs.out 2>&1 &
 echo "IPFS Daemon started."
 
-nohup redis-server > ipfs.out 2>&1 &
+nohup redis-server --port 6379 > ipfs.out 2>&1 &
 echo "Redis Server started. "
 
-nohup ./ipfs_monkey > ipfs.out 2>&1 &
+nohup ./ipfs_monkey --listen-host-port 127.0.0.1:18080 --redis-host-port 127.0.0.1:6379 --ipfs-host-port 127.0.0.1:5001 > ipfs.out 2>&1 &
 echo "IPFS Monkey started."
 
-nohup ./scsserver > scs.out 2>&1 &
+nohup ./scsserver --rpcaddr 127.0.0.1 --rpcport 50068 --rpc2 --rpccorsdomain "*" --verbosity 3 > scs.out 2>&1 &
 echo "SCS started."
 ```
 
@@ -125,7 +134,11 @@ echo "FileStorm SCS Stopped."
 
 #### 监测
 
-可以用下面的指令检测程序运行进程
+可以用下面的指令检测墨客子链运行进程
+
+`tail -f scs.out`
+
+可以用下面的指令检测IPFS成勋运行进程
 
 `tail -f scs.out`
 
