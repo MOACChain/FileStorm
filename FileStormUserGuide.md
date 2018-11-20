@@ -89,10 +89,21 @@ Beneficiary设置成SCS节点收益的受益人钱包地址。
 ipfs init
 ````
 
+然后还需要生成一个节点ID。用如下指令
+```
+cd filestorm
+./scsserver
+```
+生成的ID可以通过`ll scskeystore`看到。ID就是一个地址，是scskeystore下的文件名-后面的哪一部分在前面加上0x。
+如文件名是UTC--2018-09-23T05-52-26.554142261Z--e09f56c0c8c528b14ea594764c09c7ede73f88c0
+ID就是0xe09f56c0c8c528b14ea594764c09c7ede73f88c0
+
+我们必须往这个ID里打一定的MOAC，0.05个即可，让这个ID记录到墨客区块链的主链上去。（可以用任何墨客钱包，如wallet.moac.io来做。）
+
+
 然后就可以运行FileStorm了。FileStorm可以调用下面的脚本运行。
 
 ```
-cd filestorm
 ./run_filestorm_scs.sh
 ```
 
