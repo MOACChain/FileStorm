@@ -1,0 +1,31 @@
+50550:C 04 Dec 10:17:30.505 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+50550:C 04 Dec 10:17:30.506 # Redis version=4.0.10, bits=64, commit=00000000, modified=0, pid=50550, just started
+50550:C 04 Dec 10:17:30.506 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+50550:M 04 Dec 10:17:30.507 * Increased maximum number of open files to 10032 (it was originally set to 256).
+50550:M 04 Dec 10:17:30.511 * Running mode=standalone, port=6379.
+50550:M 04 Dec 10:17:30.511 # Server initialized
+50550:M 04 Dec 10:17:30.512 * Ready to accept connections
+nohup: ipfs_daemon: No such file or directory
+Initializing daemon...
+Successfully raised file descriptor limit to 2048.
+Swarm listening on /ip4/127.0.0.1/tcp/4000
+Swarm listening on /ip4/169.254.42.101/tcp/4000
+Swarm listening on /ip4/192.168.1.229/tcp/4000
+Swarm listening on /ip6/2605:a601:b0a0:2a00:829:8173:dab8:6c37/tcp/4000
+Swarm listening on /ip6/2605:a601:b0a0:2a00:858b:e873:fd71:1f8d/tcp/4000
+Swarm listening on /ip6/::1/tcp/4000
+Swarm listening on /p2p-circuit/ipfs/QmQBBwHr8fShxZmNG91rfnurdkbW37Qpez6PaNfhhbbS3T
+Swarm announcing /ip4/127.0.0.1/tcp/4000
+Swarm announcing /ip4/136.52.28.34/tcp/20435
+Swarm announcing /ip4/169.254.42.101/tcp/4000
+Swarm announcing /ip4/192.168.1.229/tcp/4000
+Swarm announcing /ip6/2605:a601:b0a0:2a00:829:8173:dab8:6c37/tcp/4000
+Swarm announcing /ip6/2605:a601:b0a0:2a00:858b:e873:fd71:1f8d/tcp/4000
+Swarm announcing /ip6/::1/tcp/4000
+API server listening on /ip4/127.0.0.1/tcp/5001
+Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
+Daemon is ready
+[0;37m16:38:12.041 [31mERROR [0;34m   connmgr: [0mreceived disconnected notification for conn we are not tracking: <peer.ID aZpTh7> [0;37mswarm.go:386[0m
+
+Received interrupt signal, shutting down...
+(Hit ctrl-c again to force-shutdown the daemon.)

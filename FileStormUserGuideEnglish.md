@@ -15,15 +15,18 @@ Our user guide has three parts for the three type of users.
 
 ### Storage Providers
 
-运行FileStorm子链需要安装下面四个模块
+Running FileStorm Subchain needs the following 4 modules:
 
-* SCSServer - 墨客子链节点程序。
-* redis - 本地数据库，用于存储文件公共哈希和私密哈希的对应。
-* IPFS Daemon - 文件以IPFS的方式存储的主要平台。
+* SCSServer - Moac subchain node program.
+* redis - Local database to store public and private file hash
+* IPFS Daemon - IPFS storage server program。
+* IFPS Monkey - Used by Moac subchain node program to access IPFS
 
-这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。以Macbook为例：
+We can download all these modules one by ore, or install them by using Docker. Let's start with installing them one by one.
 
 redis：
+
+#### Ubuntu
 ```
 sudo apt update
 sudo apt full-upgrade
@@ -32,6 +35,13 @@ curl -O http://download.redis.io/redis-stable.tar.gz
 tar xzvf redis-stable.tar.gz
 sudo apt install redis-server
 ```
+#### CentOs
+```
+sudo yum install epel-release
+sudo yum update
+sudo yum install redis
+```
+
 ipfs
 可以从这个链接[下载](https://dist.ipfs.io/#go-ipfs)最新版本ipfs软件包。我们以ubuntu版本为例
 ```

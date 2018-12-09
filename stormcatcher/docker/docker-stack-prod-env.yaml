@@ -1,0 +1,73 @@
+version: '3.1'
+
+services:
+  redis_db:
+    image: redis:4.0.11
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "20"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+    volumes:
+      - {***}:/data # repalce *** with named volume for redis
+  ipfs_monkey:
+    image: moacofficial/moac:ipfs
+    command: ["wait-for-it.sh", "ipfs_daemon:5001", "--", "ipfs_monkey", "-redis-host-port", "redis_db:6379", "-listen-host-port", "0.0.0.0:18080", "-ipfs-host-port", "ipfs_daemon:5001"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "20"
+    depends_on:
+      - redis_db
+      - ipfs_daemon
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+  scs_server:
+    image: moacofficial/moac:ipfs
+    command: ["scsserver", "--rpcaddr", "0.0.0.0", "--rpcport", "50065"]
+    ports:
+      - "{***}:50065" # replace *** with the port exposed for scsserver on host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "20"
+    volumes:
+      - {***}:/scs_data/config/userconfig.json # replace *** with the actual userconfig.json
+      - {***}:/scs_data/ # replace *** with named volume for scs server
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+  ipfs_daemon:
+    image: ipfs/go-ipfs:v0.4.17
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "20"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+    volumes:
+      - {***}:/data/ipfs # replace *** with named volume for ipfs
+volumes:
+  {***}: # named volume for ipfs
+  {***}: # named volume for redis
+  {***}: # named volume for scs server

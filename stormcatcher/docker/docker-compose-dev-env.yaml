@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+  redis_db:
+    image: redis:4.0.11
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+        # max_attempts: default to be never give up
+        window: 60s
+  ipfs_monkey:
+    image: heavenstar/moac:ipfs
+    command: ["wait-for-it.sh", "ipfs_daemon:5001", "--", "ipfs_monkey", "-redis-host-port", "redis_db:6379", "-listen-host-port", "0.0.0.0:18080", "-ipfs-host-port", "ipfs_daemon:5001"]
+    ports:
+      - '18080:18080' # expose 18080 on host 18080 as well
+    depends_on:
+      - redis_db
+      - ipfs_daemon
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+  scs_server:
+    image: heavenstar/moac:ipfs
+    command: scsserver
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 60s
+  ipfs_daemon:
+    image: ipfs/go-ipfs:v0.4.17
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        window: 60s
