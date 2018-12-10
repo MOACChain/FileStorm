@@ -27,7 +27,7 @@ storm_docker_test_env:
 
 
 storm-linux-amd64:
-	build/env.sh go run build/mci.go xgo -- --go=$(GO) --targets=linux/amd64 -v ./storm_catcher
+	go run build/mci.go xgo -- --go=$(GO) --targets=linux/amd64 -v ./storm_catcher
 	@echo "Linux amd64 cross compilation done:"
 	@ls -ld $(GOBIN)/storm-linux-* | grep amd64
 
