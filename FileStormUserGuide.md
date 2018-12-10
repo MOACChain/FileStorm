@@ -18,7 +18,7 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。�
 * redis - 本地数据库，用于存储文件公共哈希和私密哈希的对应。
 * IPFS Daemon - 文件以IPFS的方式存储的主要平台。
 * SCSServer - 墨客子链节点程序。
-* IPFS Monkey - 墨客子链节点对IPFS的调用。
+* stormcatcher - 墨客子链节点对IPFS的调用。
 
 这些模块可以用以下的方式一个一个下载安装，也可以用Docker的方式安装。先介绍一个一个下载安装流程。
 
@@ -41,11 +41,11 @@ sudo yum install redis
 ```
 
 ipfs
-可以从这个链接[下载](https://dist.ipfs.io/#go-ipfs)最新版本ipfs软件包。
+可以用下面的方法安装与filestorm的ipfs软件包。
 
 #### Ubuntu
 ```
-curl https://dist.ipfs.io/go-ipfs/v0.4.17/go-ipfs_v0.4.17_linux-amd64.tar.gz > go-ipfs.tar.gz
+curl https://dist.ipfs.io/go-ipfs/v0.4.18/go-ipfs_v0.4.18_linux-amd64.tar.gz > go-ipfs.tar.gz
 tar xvfz go-ipfs.tar.gz
 sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
 ```
@@ -56,11 +56,11 @@ tar xvfz go-ipfs.tar.gz
 sudo mv go-ipfs/ipfs /usr/local/bin/ipfs
 ```
 
-scsserver 和 ipfs_monkey 可以从这个[链接](https://github.com/MOACChain/FileStorm/tree/master/release)下载最新版本。
+scsserver 和 stormcatcher 可以从这个[链接](https://github.com/MOACChain/FileStorm/tree/master/release)下载最新版本。
 
-下载后，在服务器端生成filestorm做为工作文件夹。将下载的文件包在次文件夹内解压出如下文件：
+下载后，下载的文件包会在服务器端生成filestorm工作文件夹。将文件夹内解压出如下文件：
 * scsserver
-* ipfs_monkey
+* stormcatcher
 * userconfig.json
 * run_filestorm_scs.sh
 * stop_filestorm_scs.sh
