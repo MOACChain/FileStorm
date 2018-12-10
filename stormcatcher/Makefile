@@ -10,7 +10,7 @@ all:
 
 # For FileStorm Project
 storm:
-	go build -o build/bin/storm_catcher storm_catcher.go logging.go constant.go config.go ipfs.go redis.go handler.go
+	go build -o build/bin/stormcatcher storm_catcher.go logging.go constant.go config.go ipfs.go redis.go handler.go
 
 storm_test_local:
 	go test -v handler_test.go constant.go handler.go logging.go storm_catcher.go config.go ipfs.go redis.go \
@@ -27,24 +27,24 @@ storm_docker_test_env:
 
 
 storm-linux-amd64:
-	go run build/mci.go xgo -- --go=$(GO) --targets=linux/amd64 -v ./storm_catcher
+	go run build/mci.go xgo -- --go=$(GO) --targets=linux/amd64 -v .
 	@echo "Linux amd64 cross compilation done:"
-	@ls -ld $(GOBIN)/storm-linux-* | grep amd64
+	@ls -ld $(GOBIN)/stormcatcher-linux-* | grep amd64
 
 storm-windows-amd64:
 	go run build/mci.go xgo -- --go=$(GO) --targets=windows/amd64 -v .
 	@echo "Windows amd64 cross compilation done:"
-	@ls -ld $(GOBIN)/storm-windows-* | grep amd64
+	@ls -ld $(GOBIN)/stormcatcher-windows-* | grep amd64
 
 storm-linux-arm64:
 	go run build/mci.go xgo -- --go=$(GO) --targets=linux/arm64 -v .
 	@echo "Linux ARM64 cross compilation done:"
-	@ls -ld $(GOBIN)/storm-linux-* | grep arm64
+	@ls -ld $(GOBIN)/stormcatcher-linux-* | grep arm64
 
 storm-darwin-amd64:
 	go run build/mci.go xgo -- --go=$(GO) --targets=darwin/amd64 -v .
 	@echo "Darwin amd64 cross compilation done:"
-	@ls -ld $(GOBIN)/storm-darwin-* | grep amd64
+	@ls -ld $(GOBIN)/stormcatcher-darwin-* | grep amd64
 
 
 
