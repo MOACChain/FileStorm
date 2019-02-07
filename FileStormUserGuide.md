@@ -109,20 +109,20 @@ ID就是0xe09f56c0c8c528b14ea594764c09c7ede73f88c0
 
 脚本代码如下，在后台调用四个模块
 ```
-#!/bin/bash  
 #!/bin/bash
 echo "Starting FileStorm SCS--"
 
-IPFS_PATH=~/.ipfs nohup ipfs daemon > ipfs.out 2>&1 &
+#IPFS_PATH=~/.ipfs 
+nohup ipfs daemon > ipfs.out 2>&1 &
 echo "IPFS Daemon started."
 
-nohup redis-server --port 6379 > ipfs.out 2>&1 &
+nohup redis-server --port 6373 > ipfs.out 2>&1 &
 echo "Redis Server started. "
 
-nohup ./ipfs_monkey --listen-host-port 127.0.0.1:18080 --redis-host-port 127.0.0.1:6379 --ipfs-host-port 127.0.0.1:5001 > ipfs.out 2>&1 &
-echo "IPFS Monkey started."
+nohup ./stormcatcher-linux-amd64 --listen-host-port 127.0.0.1:18083 --redis-host-port 127.0.0.1:6373 --ipfs-host-port 127.0.0.1:5001 --subChain-contract-address 0x13512e62c8Cb1De316F7C442d767d0365350720c --subChain-address 127.0.0.1:50068/rpc > ipfs.out 2>&1 &
+echo "Storm Catcher started."
 
-nohup ./scsserver --rpcaddr 127.0.0.1 --rpcport 50068 --rpc2 --rpccorsdomain "*" --verbosity 3 > scs.out 2>&1 &
+nohup ./scsserver-linux-amd64 --rpc --rpcaddr 127.0.0.1 --rpcport 50068 --verbosity 4 > scs.out 2>&1 &
 echo "SCS started."
 ```
 
@@ -157,7 +157,7 @@ echo "FileStorm SCS Stopped."
 
 1. 本地必须开一个vnode连接到Moac testnet上。在
 https://github.com/MOACChain/moac-core/releases
-下载Nuwa1.0.2
+下载Nuwa1.0.7
 1. 用下面的指令开启vnode `
 ./moac --testnet --rpc --rpccorsdomain "http://wallet.moac.io" console`
 1. 打开 http://wallet.moac.io 
