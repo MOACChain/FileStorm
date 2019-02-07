@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.user.dao.UserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.user.entity.UserEntity" id="userMap">
+        <result property="userId" column="user_id"/>
+        <result property="address" column="address"/>
+        <result property="userAccount" column="user_account"/>
+        <result property="password" column="password"/>
+        <result property="createTime" column="create_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="lastLoginIp" column="last_login_ip"/>
+		<result property="passwordHint" column="password_hint"/>
+		<result property="keyStore" column="key_store"/>
+    </resultMap>
+
+	<select id="queryUserIdByAddress" resultType="long">
+		select user_id from tb_user where address = #{address}
+	</select>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.user.entity.UserEntity">
+		select * from tb_user
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by user_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_user 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_user where user_id in 
+		<foreach item="userId" collection="array" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.storagePackage.dao.StoragePackageDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.storagePackage.entity.StoragePackageEntity" id="storagePackageMap">
+        <result property="storagePackageId" column="storage_package_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="createDate" column="create_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="formatSize" column="format_size"/>
+        <result property="useFormatSize" column="use_format_size"/>
+        <result property="realSize" column="real_size"/>
+        <result property="userRealSize" column="user_real_size"/>
+        <result property="price" column="price"/>
+		<result property="status" column="status"/>
+		<result property="currencyNumber" column="currency_number"/>
+		<result property="buyHash" column="buy_hash"/>
+		<result property="buyStatus" column="buy_status"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.storagePackage.entity.StoragePackageEntity">
+		select * from tb_storage_package
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by storage_package_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryUpdatePackage" resultType="moac.ipfs.modules.back.storagePackage.entity.StoragePackageEntity">
+		select * from tb_storage_package where status != 2
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_storage_package 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_storage_package where storage_package_id in 
+		<foreach item="storagePackageId" collection="array" open="(" separator="," close=")">
+			#{storagePackageId}
+		</foreach>
+	</delete>
+
+</mapper>

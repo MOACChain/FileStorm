@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.currency.dao.CurrencyDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.currency.entity.CurrencyEntity" id="currencyMap">
+        <result property="currencyId" column="currency_id"/>
+        <result property="number" column="number"/>
+        <result property="series" column="series"/>
+        <result property="englishName" column="english_name"/>
+        <result property="totalSupply" column="total_supply"/>
+        <result property="decimals" column="decimals"/>
+        <result property="contractAddress" column="contract_address"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.currency.entity.CurrencyEntity">
+		select * from tb_currency
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by currency_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_currency 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_currency where currency_id in 
+		<foreach item="currencyId" collection="array" open="(" separator="," close=")">
+			#{currencyId}
+		</foreach>
+	</delete>
+
+</mapper>

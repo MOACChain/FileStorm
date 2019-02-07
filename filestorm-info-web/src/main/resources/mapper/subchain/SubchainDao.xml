@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.subchain.dao.SubchainDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.subchain.entity.SubchainEntity" id="subchainMap">
+        <result property="subchainId" column="subchain_id"/>
+        <result property="subchainAddress" column="subchain_address"/>
+        <result property="subchainSize" column="subchain_size"/>
+        <result property="remainSize" column="remain_size"/>
+        <result property="useSize" column="use_size"/>
+        <result property="percentageUse" column="percentage_use"/>
+		<result property="sysAddress" column="sys_address"/>
+		<result property="storageSpecification" column="storage_specification"/>
+		<result property="subchainType" column="subchain_type"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.subchain.entity.SubchainEntity">
+		select * from tb_subchain
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by subchain_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_subchain 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_subchain where subchain_id in 
+		<foreach item="subchainId" collection="array" open="(" separator="," close=")">
+			#{subchainId}
+		</foreach>
+	</delete>
+
+	<select id="queryAddFileList" resultType="moac.ipfs.modules.back.subchain.entity.SubchainEntity">
+		select * from tb_subchain
+		where remain_size > #{fileSize}
+		<if test="list != null">
+			and subchain_address
+			not in
+			<foreach item="item" index="index" collection="list"
+					 open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by percentage_use asc
+		limit 0,1
+	</select>
+
+	<select id="querySubList" resultType="string">
+		select subchain_address from tb_subchain_list
+	</select>
+
+	<select id="insertSubList" parameterType="string">
+		INSERT INTO tb_subchain_list (subchain_address) VALUES (#{subchainAddress})
+	</select>
+
+	<select id="deleteSubList" parameterType="string">
+		delete from tb_subchain_list where subchain_address = #{subchainAddress}
+	</select>
+</mapper>

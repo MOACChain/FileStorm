@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.user.dao.UserFileDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.user.entity.UserFileEntity" id="userFileMap">
+        <result property="fileId" column="file_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="hash" column="hash"/>
+        <result property="createTime" column="create_time"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileSize" column="file_size"/>
+        <result property="fileRealSize" column="file_real_size"/>
+        <result property="subchainAddress" column="subchain_address"/>
+        <result property="remark" column="remark"/>
+		<result property="deleteType" column="delete_type"/>
+		<result property="encrypt" column="encrypt"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.user.entity.UserFileEntity">
+		select * from tb_user_file where delete_type != 1
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="hash != null and hash.trim() != ''">
+			and hash = #{hash}
+		</if>
+		<if test="fileName != null and fileName.trim() != ''">
+			and file_name = #{fileName}
+		</if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by file_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(1) from tb_user_file where delete_type != 1
+		<if test="userId != null">
+			and user_id = #{userId}
+		</if>
+		<if test="hash != null and hash.trim() != ''">
+			and hash = #{hash}
+		</if>
+		<if test="fileName != null and fileName.trim() != ''">
+			and file_name = #{fileName}
+		</if>
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_user_file where file_id in 
+		<foreach item="fileId" collection="array" open="(" separator="," close=")">
+			#{fileId}
+		</foreach>
+	</delete>
+
+</mapper>

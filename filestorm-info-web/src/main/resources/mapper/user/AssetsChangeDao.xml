@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.user.dao.AssetsChangeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.user.entity.AssetsChangeEntity" id="assetsChangeMap">
+        <result property="assetsChangeId" column="assets_change_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="associateId" column="associate_id"/>
+        <result property="type" column="type"/>
+        <result property="beforeBalance" column="before_balance"/>
+        <result property="afterBalance" column="after_balance"/>
+        <result property="beforeLock" column="before_lock"/>
+        <result property="afterLock" column="after_lock"/>
+        <result property="balanceChange" column="balance_change"/>
+        <result property="lockChange" column="lock_change"/>
+        <result property="createTime" column="create_time"/>
+        <result property="note" column="note"/>
+        <result property="currencyNumber" column="currency_number"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.user.entity.AssetsChangeEntity">
+		select * from tb_assets_change
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by assets_change_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_assets_change 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_assets_change where assets_change_id in 
+		<foreach item="assetsChangeId" collection="array" open="(" separator="," close=")">
+			#{assetsChangeId}
+		</foreach>
+	</delete>
+
+</mapper>

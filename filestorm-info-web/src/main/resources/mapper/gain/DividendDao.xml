@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.gain.dao.DividendDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.gain.entity.DividendEntity" id="dividendMap">
+        <result property="dividendId" column="dividend_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="dividendAmount" column="dividend_amount"/>
+        <result property="halfTbAll" column="half_tb_all"/>
+        <result property="halfTb" column="half_tb"/>
+        <result property="oneTbAll" column="one_tb_all"/>
+        <result property="oneTb" column="one_tb"/>
+        <result property="twoTbAll" column="two_tb_all"/>
+        <result property="twoTb" column="two_tb"/>
+        <result property="fourTbAll" column="four_tb_all"/>
+        <result property="fourTb" column="four_tb"/>
+        <result property="eightTbAll" column="eight_tb_all"/>
+        <result property="eightTb" column="eight_tb"/>
+        <result property="sixteenTbAll" column="sixteen_tb_all"/>
+        <result property="sixteenTb" column="sixteen_tb"/>
+        <result property="thirtyTwoTbAll" column="thirty_two_tb_all"/>
+        <result property="thirtyTwoTb" column="thirty_two_tb"/>
+        <result property="currencyNumber" column="currency_number"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.gain.entity.DividendEntity">
+		select * from tb_dividend
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by dividend_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_dividend 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_dividend where dividend_id in 
+		<foreach item="dividendId" collection="array" open="(" separator="," close=")">
+			#{dividendId}
+		</foreach>
+	</delete>
+
+</mapper>

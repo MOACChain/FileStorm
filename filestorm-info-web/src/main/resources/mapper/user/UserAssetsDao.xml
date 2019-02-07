@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.user.dao.UserAssetsDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.user.entity.UserAssetsEntity" id="userAssetsMap">
+        <result property="assetsId" column="assets_id"/>
+        <result property="currencyNumber" column="currency_number"/>
+        <result property="userId" column="user_id"/>
+        <result property="lock" column="lock"/>
+        <result property="balance" column="balance"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.user.entity.UserAssetsEntity">
+		select * from tb_user_assets
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by assets_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_user_assets 
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_user_assets where assets_id in 
+		<foreach item="assetsId" collection="array" open="(" separator="," close=")">
+			#{assetsId}
+		</foreach>
+	</delete>
+
+</mapper>

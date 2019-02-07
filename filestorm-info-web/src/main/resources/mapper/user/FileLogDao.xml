@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moac.ipfs.modules.back.user.dao.FileLogDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="moac.ipfs.modules.back.user.entity.FileLogEntity" id="fileLogMap">
+        <result property="logId" column="log_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userAddress" column="user_address"/>
+        <result property="fileHash" column="file_hash"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="operationTime" column="operation_time"/>
+        <result property="fileRemark" column="file_remark"/>
+    </resultMap>
+
+	<select id="queryList" resultType="moac.ipfs.modules.back.user.entity.FileLogEntity">
+		select * from tb_file_log where user_id = #{userId}
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by log_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_file_log where user_id = #{userId}
+	</select>
+	
+	<delete id="deleteBatch">
+		delete from tb_file_log where log_id in 
+		<foreach item="logId" collection="array" open="(" separator="," close=")">
+			#{logId}
+		</foreach>
+	</delete>
+
+</mapper>
