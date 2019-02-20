@@ -29,14 +29,14 @@ Ubuntu 18.04 LTS
 
 多节点测试，每10个FileStorm节点需要接一个MOAC vnode节点。所以需要先装一个vnode节点。这个节点为FileStorm节点提供通信，它不参与存储挖矿，也不需要装大存储硬盘。Vnode可以跟某一个FileStorm节点公用。
 
-####Vnode节点安装
+#### Vnode节点安装
 
 1. 下载filestorm-vnode.zip并解压.
 1. 进入vnode文件夹。
 1. 运行`nohup ./moac-linux-amd64 --testnet --rpc &`
 1. 打开服务器端口50062和8545
 
-####FileStorm节点安装
+#### FileStorm节点安装
 
 1. 下载filestorm.zip并解压.
 1. 进入到解压后的文件夹filestorm.
@@ -57,7 +57,7 @@ Ubuntu 18.04 LTS
 5. 可以用`tail -f100 scs.out`查看节点运行状况
 5. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
 
-###更多链接
+### 更多链接
 
 FileStorm官网
 http://www.filestorm.info 
