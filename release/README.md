@@ -1,6 +1,12 @@
-## FileStorm 安装教程：
+# FileStorm 参与教程：
 
-公测期间暂时只支持Linux系统。建议大家下载
+FileStorm是基于MOAC（墨客）区块链技术，把IPFS协议付诸实践的一个分布式存储平台。参与FileStorm需要安装FileStorm节点（俗称矿机）程序，然后到FileStorm平台注册，参与提供存储服务（挖矿）。
+
+## FileStorm 节点程序安装
+
+公测期间暂时只支持Linux系统。至少2核CPU，4GB内存，硬盘支持1TB和8TB两种。（将来会开放更多硬盘大小选择）
+
+建议大家选用下面两种操作系统
 CentOs 7.4 64位 (安装包需要用到make, gcc和glibc，所以建议安装完整版)
 Ubuntu 18.04 LTS
 
@@ -28,6 +34,7 @@ Ubuntu 18.04 LTS
 ### 多节点测试：
 
 多节点测试，每10个FileStorm节点需要接一个MOAC vnode节点。所以需要先装一个vnode节点。这个节点为FileStorm节点提供通信，它不参与存储挖矿，也不需要装大存储硬盘。Vnode可以跟某一个FileStorm节点公用。
+（vnode节点用于把矿工节点跟MOAC区块链连接，接受和发送区块链交易。公测期间，FileStorm免费提供vnode，上主网后，vnode会从跟它连接的FileStorm矿机收取手续费用。我们也欢迎大矿场公开自己的vnode给大家使用，赚取手续费。）
 
 #### Vnode节点安装
 
@@ -57,7 +64,16 @@ Ubuntu 18.04 LTS
 5. 可以用`tail -f100 scs.out`查看节点运行状况
 5. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
 
-### 更多链接
+## 注册矿机
+
+1. 到 http://www.fileStorm.info 网站，注册成为新用户。
+
+
+## 奖励方式
+
+所有参与测试的矿机都可以得到测试网的FST奖励，暂时的设定是每台矿机每40个区块（约7分钟）可得0.25个FST。挖矿所得的测试网FST，将来可以按一定的比例兑换成主网FST通证（暂定2:1）。
+
+## 更多链接
 
 FileStorm官网
 http://www.filestorm.info 
