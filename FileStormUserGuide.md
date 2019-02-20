@@ -15,7 +15,7 @@ FileStorm是在墨客子链上实现的基于IPFS的去中心化存储平台。�
 
 运行FileStorm子链需要安装下面四个模块
 
-* redis - 本地数据库，用于存储文件公共哈希和私密哈希的对应。
+* redis - 本地数据库，用于缓存文件调用的请求。
 * IPFS Daemon - 文件以IPFS的方式存储的主要平台。
 * SCSServer - 墨客子链节点程序。
 * stormcatcher - 墨客子链节点对IPFS的调用。

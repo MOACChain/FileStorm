@@ -111,6 +111,8 @@ func HandleIPFSDelete(fileHash string) error {
 	return nil
 }
 
+// offset就是nextNumber
+
 func getVerifyOffsetAndLength(fileSize int64, offset int64) ([]int64, bool) {
 	if fileSize == 0 {
 		return []int64{0, 0, -1, -1}, false

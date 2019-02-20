@@ -18,6 +18,7 @@ func init() {
 	flag.StringVar(&listenAddressAndPort, "listen-host-port", "127.0.0.1:18080", "host:port, e.g. 127.0.0.1:18080")
 	flag.StringVar(&redisHostPort, "redis-host-port", "localhost:6379", "host:port, e.g. 127.0.0.1:6379")
 	flag.StringVar(&ipfsHostPort, "ipfs-host-port", "localhost:5001", "host:port, e.g. 127.0.0.1:5001")
+	// 加合约 --sub-chain-base
 }
 
 // AccessType is the ipfs file access type
@@ -125,31 +126,40 @@ func verifyHandler(w http.ResponseWriter, r *http.Request) {
 	// curl "http://127.0.0.1:18080/verify?file_hash=QmTor1GsqZQwJdFoTYjAdEEjXDZgYDm1oc3Lj8waHUKRFN&offset=0"
 	q := r.URL.Query()
 	randomInt := q.Get("random_int")
-	fileHash := q.Get("file_hash")
+	block_number:= q.Get("block_number")
+	next_number := q.Get("next_number")
 
-	verifyRequest := VerifyRequest{Filehash: fileHash, Offset: randomInt}
-	if errs := validator.Validate(verifyRequest); errs != nil {
-		http.Error(w, fmt.Sprintf("Invalid verify parameter: %v", errs), 400)
-		return
-	}
+	// 需要拿到合约地址
+	// 调用合约拿到合约里的fileHash[] fileHash是一个struct, 里面有被验证次数，给文件一个ID
 
-	offset, errParse := strconv.ParseInt(verifyRequest.Offset, 10, 64)
-	if errParse != nil {
-		http.Error(w, "Can not parse offset value.", 400)
-		return
-	}
+	// 设计一个算法拿到fileHash[]中得随机一组文件。利用randomInt和被验证次数，随机得把没怎么被验证过的文件验证一边。
+	// 再从这个文件中找到第next_number个字节往后数128个字节，得出哈希值。
 
-	err, result := HandleIPFSVerify(fileHash, offset)
-	if err != nil {
-		http.Error(w, err.Error(), 404)
-	}
-	w.Write(result)
+	// 发一个交易，把结果写到子链链上。data： ‘shard ID: 哈希值’
+
+	// verifyRequest := VerifyRequest{Filehash: fileHash, Offset: randomInt}
+	// if errs := validator.Validate(verifyRequest); errs != nil {
+	// 	http.Error(w, fmt.Sprintf("Invalid verify parameter: %v", errs), 400)
+	// 	return
+	// }
+
+	// offset, errParse := strconv.ParseInt(verifyRequest.Offset, 10, 64)
+	// if errParse != nil {
+	// 	http.Error(w, "Can not parse offset value.", 400)
+	// 	return
+	// }
+
+	// err, result := HandleIPFSVerify(fileHash, offset)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), 404)
+	// }
+	// w.Write(result)
 }
 
 func catchHandler(w http.ResponseWriter, r *http.Request) {
 	input := r.URL.Query().Get("input")
 
-	switch fileHash, accessType, nil := decodeInput(input); accessType {
+	switch fileHash, accessType, shardId, ipfsId, nil := decodeInput(input); accessType {
 	case Remove:
 		deleteRequest := DeleteRequest{Filehash: fileHash}
 		if errs := validator.Validate(deleteRequest); errs != nil {
@@ -186,8 +196,10 @@ func catchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// 新合约会要加上调用服务器的IPFS ADDR
+
 // DecodeIpfsParams decodes input byte array and returns the value of ipfsFile parameters.
-func decodeInput(hexString string) (string, AccessType, error) {
+func decodeInput(hexString string) (string, AccessType, uint shardId, string ipfsId, error) {
 	invalidIpfsHasErr := errors.New("invalid ipfs hash format")
 	log.Debugf("hexString, |%v|", hexString)
 	if len(hexString) < 266 {
@@ -290,13 +302,13 @@ func main() {
 	http.HandleFunc("/ipfs/write", writeHandler)
 	http.HandleFunc("/ipfs/delete", deleteHandler)
 
-	// proxy read/write
-	http.HandleFunc("/proxy/read", proxyReadHandler)
-	http.HandleFunc("/proxy/write", proxyWriteHandler)
+	// // proxy read/write
+	// http.HandleFunc("/proxy/read", proxyReadHandler)
+	// http.HandleFunc("/proxy/write", proxyWriteHandler)
 
-	// vnode proxy endpoints
-	http.HandleFunc("/vnode/restoreToLocal", restoreToLocalHandler)
-	http.HandleFunc("/vnode/directDownload", directDownloadHandler)
+	// // vnode proxy endpoints
+	// http.HandleFunc("/vnode/restoreToLocal", restoreToLocalHandler)
+	// http.HandleFunc("/vnode/directDownload", directDownloadHandler)
 
 	// print config
 	log.Info("StormCatcher:", listenAddressAndPort)
