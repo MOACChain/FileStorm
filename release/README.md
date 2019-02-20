@@ -19,11 +19,11 @@ Ubuntu 18.04 LTS
     ...
 }
 ```
-1. 运行`./stop_filestorm_scs.sh` 停止程序
-1. 运行`./run_filestorm_scs.sh` 重启
-1. 打开服务器端口4001，5001，8080
-1. 可以用`tail -f100 scs.out`查看节点运行状况
-1. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
+5. 运行`./stop_filestorm_scs.sh` 停止程序
+5. 运行`./run_filestorm_scs.sh` 重启
+5. 打开服务器端口4001，5001，8080
+5. 可以用`tail -f100 scs.out`查看节点运行状况
+5. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
 
 ### 多节点测试：
 
@@ -51,9 +51,8 @@ FileStorm节点安装
     ...
 }
 ```
-1. 打开run_filestorm_scs，将第12行`--vnode-address http://120.78.2.59:8547`改成`--vnode-address http://[上面的Vnode IP]:8545`
-1. 运行`./stop_filestorm_scs.sh` 停止程序
-1. 运行`./run_filestorm_scs.sh` 重启
-1. 可以用`tail -f100 scs.out`查看节点运行状况
-1. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
-
+5. 运行`./stop_filestorm_scs.sh` 停止程序
+5. 运行`./run_filestorm_scs.sh` 重启
+5. 打开服务器端口4001，5001，8080
+5. 可以用`tail -f100 scs.out`查看节点运行状况
+5. 可以用`tail -f100 ipfs.out`查看ipfs运行状况
