@@ -10,6 +10,22 @@ FileStorm是基于MOAC（墨客）区块链技术，把IPFS协议付诸实践的
 * CentOs 7.4 64位 (安装包需要用到make, gcc和glibc，所以建议安装完整版)
 * Ubuntu 18.04 LTS
 
+如果一定要使用Debian 9的朋友，记得用下面的指令安装几个必要的软件包。
+```
+apt-get install make
+apt-get install gcc
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.19.tar.gz
+
+tar -zxf glibc-2.19.tar.gz
+
+mkdir glibc-build
+cd glibc-build
+../glibc-2.19/configure --prefix=/usr/lib64/glibc-2.19
+
+make
+make install
+```
+
 ### 单节点测试：
 
 如果用户只有单个挖矿节点参与测试，只需要准备一台机器。然后执行下面的流程。
